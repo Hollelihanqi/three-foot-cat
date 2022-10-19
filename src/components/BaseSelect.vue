@@ -23,7 +23,7 @@
 import { defineProps, PropType, watchEffect } from "vue"
 import BaseFormItem from "./BaseFormItem.vue"
 
-interface OptionItemProps {
+export interface OptionItemProps {
   label: string
   value: string | number
   [propsName: string]: any

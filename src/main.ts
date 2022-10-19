@@ -8,7 +8,6 @@ import ElementPlus from "element-plus"
 import loadSvg from "@/icons"
 import * as directives from "@/directives"
 import { vuetify } from "./plugins/vuetify.js"
-
 import "uno.css"
 import "normalize.css"
 import "element-plus/dist/index.css"
