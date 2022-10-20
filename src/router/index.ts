@@ -70,8 +70,8 @@ export const constantRoutes: RouteRecordRaw[] = [
       },
       {
         path: "wappActiveOrder",
-        component: () => import("@/views/order/wappActive/List.vue"),
-        name: "WappActiveOrder",
+        component: () => import("@/views/order/wappActivity/List.vue"),
+        name: "wappActivityOrder",
         meta: {
           title: "小程序活动订单",
           icon: "menu"

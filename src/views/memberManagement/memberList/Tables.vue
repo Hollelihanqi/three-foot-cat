@@ -1,8 +1,14 @@
 <template>
   <div class="table-box">
     <div class="table-top-box">
-      <BaseButton type="plain" @click="handleExport">导出报表</BaseButton>
-      <BaseButton class="new-add-btn" @click="handlePrint">打印报表</BaseButton>
+      <el-button type="primary">新办会员卡</el-button>
+      <el-button type="primary">续充会员卡</el-button>
+      <el-button type="primary">退款</el-button>
+      <el-button type="primary">挂失</el-button>
+      <el-button type="primary">注销</el-button>
+      <el-button type="primary">转账</el-button>
+      <el-button type="primary">老卡导入模板</el-button>
+      <el-button type="primary">上传老卡文件</el-button>
     </div>
     <BaseTable
       :columns="columns"
@@ -11,15 +17,23 @@
       :current-page="store.queryParams.pageNum"
       :page-size="store.queryParams.pageSize"
       :handle-change="handleTableChange"
-    />
+    >
+      <template #action="scope">
+        <!-- <yto-button style="color: #2c3cd8" type="text" @click="handleDetails(scope.index, scope.row)">详情</yto-button>
+        <i class="yto-icon-minus vhi" />
+        <yto-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.index, scope.row)">编辑</yto-button>
+        <i class="yto-icon-minus vhi" />
+        <yto-button style="color: #ff1212" type="text" @click="handleDelete(scope.index, scope.row)">删除</yto-button> -->
+      </template>
+    </BaseTable>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseButton from "@/components/BaseButton.vue"
-import { useStoreOrderStore } from "@/store/modules/useStoreOrder"
-const store = useStoreOrderStore()
+import { useMemberListStore } from "@/store/modules/useMemberList"
+const store = useMemberListStore()
 
 // 导出报表
 const handleExport = () => {}
@@ -40,49 +54,44 @@ onActivated(() => {
 })
 const columns = [
   {
-    label: "序号",
-    slot: "number",
-    width: 60
+    label: "姓名",
+    slot: "number"
   },
   {
-    label: "流水号",
+    label: "卡类型",
     prop: "systemName"
   },
   {
-    label: "结算时间",
+    label: "手机号",
     prop: "systemCode"
   },
   {
-    label: "支付包厢号",
+    label: "会员卡号",
     prop: "name"
   },
   {
-    label: "支付手牌号",
+    label: "实体卡号",
     prop: "code"
   },
   {
-    label: "订单金额",
+    label: "会员卡余额",
     prop: "url"
   },
   {
-    label: "技师编号",
-    prop: "category"
+    label: "剩余次数(次卡)",
+    prop: "url"
   },
   {
-    label: "订单状态",
-    className: "caller-cell",
-    slot: "callerCount"
+    label: "状态",
+    slot: "action"
   },
   {
-    label: "支付类型",
-    prop: "actionCount",
-    className: "service-api-cell",
-    slot: "actionCount"
+    label: "最后一次充卡时间",
+    slot: "action"
   },
   {
-    label: "收银员",
-    className: "host-cell",
-    slot: "hostCount"
+    label: "备注",
+    slot: "action"
   }
 ]
 </script>

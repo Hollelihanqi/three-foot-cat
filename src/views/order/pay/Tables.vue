@@ -1,9 +1,9 @@
 <template>
   <div class="table-box">
-    <div class="table-top-box">
+    <!-- <div class="table-top-box">
       <BaseButton type="plain" @click="handleExport">导出报表</BaseButton>
       <BaseButton class="new-add-btn" @click="handlePrint">打印报表</BaseButton>
-    </div>
+    </div> -->
     <BaseTable
       :columns="columns"
       :table-data="store.list"
@@ -11,15 +11,23 @@
       :current-page="store.queryParams.pageNum"
       :page-size="store.queryParams.pageSize"
       :handle-change="handleTableChange"
-    />
+    >
+      <template #action="scope">
+        <!-- <yto-button style="color: #2c3cd8" type="text" @click="handleDetails(scope.index, scope.row)">详情</yto-button>
+        <i class="yto-icon-minus vhi" />
+        <yto-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.index, scope.row)">编辑</yto-button>
+        <i class="yto-icon-minus vhi" />
+        <yto-button style="color: #ff1212" type="text" @click="handleDelete(scope.index, scope.row)">删除</yto-button> -->
+      </template>
+    </BaseTable>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseButton from "@/components/BaseButton.vue"
-import { useStoreOrderStore } from "@/store/modules/useStoreOrder"
-const store = useStoreOrderStore()
+import { usePayRecordsStore } from "@/store/modules/usePayRecords"
+const store = usePayRecordsStore()
 
 // 导出报表
 const handleExport = () => {}
@@ -45,44 +53,29 @@ const columns = [
     width: 60
   },
   {
-    label: "流水号",
+    label: "支付方式",
     prop: "systemName"
   },
   {
-    label: "结算时间",
+    label: "支付金额",
     prop: "systemCode"
   },
   {
-    label: "支付包厢号",
+    label: "支付时间",
     prop: "name"
   },
   {
-    label: "支付手牌号",
+    label: "支付所在包厢",
     prop: "code"
   },
   {
-    label: "订单金额",
+    label: "支付状态",
     prop: "url"
   },
   {
-    label: "技师编号",
-    prop: "category"
-  },
-  {
-    label: "订单状态",
-    className: "caller-cell",
-    slot: "callerCount"
-  },
-  {
-    label: "支付类型",
-    prop: "actionCount",
-    className: "service-api-cell",
-    slot: "actionCount"
-  },
-  {
-    label: "收银员",
-    className: "host-cell",
-    slot: "hostCount"
+    label: "操作",
+    slot: "action",
+    width: 120
   }
 ]
 </script>

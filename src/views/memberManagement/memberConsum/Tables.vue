@@ -1,8 +1,8 @@
 <template>
   <div class="table-box">
     <div class="table-top-box">
-      <BaseButton type="plain" @click="handleExport">导出报表</BaseButton>
-      <BaseButton class="new-add-btn" @click="handlePrint">打印报表</BaseButton>
+      <el-button type="primary" @click="handleExport">导出报表</el-button>
+      <!-- <BaseButton class="new-add-btn" @click="handlePrint">打印报表</BaseButton> -->
     </div>
     <BaseTable
       :columns="columns"
@@ -11,15 +11,23 @@
       :current-page="store.queryParams.pageNum"
       :page-size="store.queryParams.pageSize"
       :handle-change="handleTableChange"
-    />
+    >
+      <template #action="scope">
+        <!-- <yto-button style="color: #2c3cd8" type="text" @click="handleDetails(scope.index, scope.row)">详情</yto-button>
+        <i class="yto-icon-minus vhi" />
+        <yto-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.index, scope.row)">编辑</yto-button>
+        <i class="yto-icon-minus vhi" />
+        <yto-button style="color: #ff1212" type="text" @click="handleDelete(scope.index, scope.row)">删除</yto-button> -->
+      </template>
+    </BaseTable>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseButton from "@/components/BaseButton.vue"
-import { useStoreOrderStore } from "@/store/modules/useStoreOrder"
-const store = useStoreOrderStore()
+import { useReserveOrderStore } from "@/store/modules/useReserveOrder"
+const store = useReserveOrderStore()
 
 // 导出报表
 const handleExport = () => {}
@@ -40,49 +48,45 @@ onActivated(() => {
 })
 const columns = [
   {
-    label: "序号",
-    slot: "number",
-    width: 60
+    label: "时间",
+    slot: "number"
   },
   {
-    label: "流水号",
+    label: "姓名",
     prop: "systemName"
   },
   {
-    label: "结算时间",
+    label: "卡类型",
     prop: "systemCode"
   },
   {
-    label: "支付包厢号",
+    label: "手机号",
     prop: "name"
   },
   {
-    label: "支付手牌号",
+    label: "实体卡号",
     prop: "code"
   },
   {
-    label: "订单金额",
+    label: "卡号",
     prop: "url"
   },
   {
-    label: "技师编号",
-    prop: "category"
+    label: "操作人",
+    prop: "url"
   },
   {
-    label: "订单状态",
-    className: "caller-cell",
-    slot: "callerCount"
+    label: "操作类型",
+    prop: "url"
   },
   {
-    label: "支付类型",
-    prop: "actionCount",
-    className: "service-api-cell",
-    slot: "actionCount"
+    label: "余额",
+    prop: "url"
   },
   {
-    label: "收银员",
-    className: "host-cell",
-    slot: "hostCount"
+    label: "操作",
+    slot: "action",
+    width: 120
   }
 ]
 </script>

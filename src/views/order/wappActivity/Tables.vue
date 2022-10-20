@@ -1,9 +1,9 @@
 <template>
   <div class="table-box">
-    <div class="table-top-box">
+    <!-- <div class="table-top-box">
       <BaseButton type="plain" @click="handleExport">导出报表</BaseButton>
       <BaseButton class="new-add-btn" @click="handlePrint">打印报表</BaseButton>
-    </div>
+    </div> -->
     <BaseTable
       :columns="columns"
       :table-data="store.list"
@@ -18,8 +18,8 @@
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseButton from "@/components/BaseButton.vue"
-import { useStoreOrderStore } from "@/store/modules/useStoreOrder"
-const store = useStoreOrderStore()
+import { useWappActivityOrderStore } from "@/store/modules/useWappActivityOrder"
+const store = useWappActivityOrderStore()
 
 // 导出报表
 const handleExport = () => {}
@@ -40,49 +40,57 @@ onActivated(() => {
 })
 const columns = [
   {
-    label: "序号",
-    slot: "number",
+    label: "ID",
+    prop: "id",
     width: 60
   },
   {
-    label: "流水号",
+    label: "客户",
     prop: "systemName"
   },
   {
-    label: "结算时间",
+    label: "人数",
     prop: "systemCode"
   },
   {
-    label: "支付包厢号",
+    label: "到店时间",
     prop: "name"
   },
   {
-    label: "支付手牌号",
+    label: "技术",
     prop: "code"
   },
   {
-    label: "订单金额",
+    label: "房间",
     prop: "url"
   },
   {
-    label: "技师编号",
+    label: "服务项目",
     prop: "category"
   },
   {
-    label: "订单状态",
+    label: "折后价",
     className: "caller-cell",
     slot: "callerCount"
   },
   {
-    label: "支付类型",
+    label: "门市价",
     prop: "actionCount",
     className: "service-api-cell",
     slot: "actionCount"
   },
   {
-    label: "收银员",
+    label: "支付类型",
     className: "host-cell",
     slot: "hostCount"
+  },
+  {
+    label: "类型",
+    prop: "category"
+  },
+  {
+    label: "状态",
+    prop: "category"
   }
 ]
 </script>
