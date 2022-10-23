@@ -96,6 +96,71 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: "/member",
+    component: Layout,
+    name: "Member",
+    meta: {
+      title: "会员管理",
+      icon: "menu"
+    },
+    children: [
+      {
+        path: "memberList",
+        component: () => import("@/views/memberManagement/memberList/List.vue"),
+        name: "MemberList",
+        meta: {
+          title: "会员列表",
+          icon: "menu"
+        }
+      },
+      {
+        path: "memberConsum",
+        component: () => import("@/views/memberManagement/memberConsum/List.vue"),
+        name: "MemberConsum",
+        meta: {
+          title: "会员消费",
+          icon: "menu"
+        }
+      },
+      {
+        path: "memberPayCardRecords",
+        component: () => import("@/views/memberManagement/memberPayCardRecords/List.vue"),
+        name: "MemberPayCardRecords",
+        meta: {
+          title: "会员购卡记录",
+          icon: "menu"
+        }
+      },
+      {
+        path: "memberCardHandleRecords",
+        component: () => import("@/views/memberManagement/memberCardHandleRecords/List.vue"),
+        name: "memberCardHandleRecords",
+        meta: {
+          title: "会员卡操作记录",
+          icon: "menu"
+        }
+      },
+      {
+        path: "memberCardManagement",
+        component: () => import("@/views/memberManagement/memberCardManagement/List.vue"),
+        name: "memberCardManagement",
+        meta: {
+          title: "会员卡管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "memberCardSettingOtherStore",
+        component: () => import("@/views/memberManagement/memberCardSettingOtherStore/List.vue"),
+        name: "memberCardSettingOtherStore",
+        meta: {
+          title: "跨店会员卡配置",
+          icon: "menu"
+        }
+      }
+    ]
   }
 ]
 

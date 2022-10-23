@@ -1,15 +1,8 @@
 <template>
   <BaseFilterBox>
-    <yto-form
-      class="filter-form"
-      ref="formInstance"
-      inline
-      :model="store.queryParams"
-      label-width="80px"
-      inline-message
-    >
+    <el-form class="filter-form" ref="formInstance" inline :model="store.queryParams" label-width="80px" inline-message>
       <BaseFormItem v-model="store.queryParams.keyword" placeholder="请输入验证码" label="" />
-    </yto-form>
+    </el-form>
     <div class="action-btn">
       <el-button @click="handleReset">重置</el-button>
       <el-button type="primary" @click="handleSubmit">查询</el-button>

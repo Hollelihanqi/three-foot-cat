@@ -1,8 +1,7 @@
 <template>
   <div class="table-box">
     <div class="table-top-box">
-      <el-button type="primary" @click="handleExport">导出报表</el-button>
-      <el-button type="primary" class="new-add-btn" @click="handlePrint">打印报表</el-button>
+      <el-button type="primary" @click="handleCreate">创建</el-button>
     </div>
     <BaseTable
       :columns="columns"
@@ -11,18 +10,24 @@
       :current-page="store.queryParams.pageNum"
       :page-size="store.queryParams.pageSize"
       :handle-change="handleTableChange"
-    />
+    >
+      <template #action="scope">
+        <el-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.row)">编辑</el-button>
+        <i class="el-icon-minus vhi" />
+        <el-button style="color: #2c3cd8" type="text" @click="handleDelete(scope.row)">删除</el-button>
+        <i class="el-icon-minus vhi" />
+      </template>
+    </BaseTable>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
-// import BaseButton from "@/components/BaseButton.vue"
-import { useStoreOrderStore } from "@/store/modules/useStoreOrder"
-const store = useStoreOrderStore()
+import { useReserveOrderStore } from "@/store/modules/useReserveOrder"
+const store = useReserveOrderStore()
 
-// 导出报表
-const handleExport = () => {}
+// 创建
+const handleCreate = () => {}
 
 // 打印报表
 const handlePrint = () => {}
@@ -34,55 +39,54 @@ const handleTableChange = async (type: string, num: number) => {
     store.setQueryParamsAction({ pageNum: 1, pageSize: num })
   }
 }
+// 修改
+const handleEdit = (row: any) => {}
+// 删除
+const handleDelete = (row: any) => {}
 
 onActivated(() => {
   store.getListAction()
 })
 const columns = [
   {
-    label: "序号",
-    slot: "number",
-    width: 60
+    label: "卡名称",
+    slot: "number"
   },
   {
-    label: "流水号",
+    label: "顺序卡",
+    slot: "number"
+  },
+  {
+    label: "卡类型",
     prop: "systemName"
   },
   {
-    label: "结算时间",
+    label: "售卡金额",
     prop: "systemCode"
   },
   {
-    label: "支付包厢号",
+    label: "赠送金额",
     prop: "name"
   },
   {
-    label: "支付手牌号",
-    prop: "code"
+    label: "有效日期",
+    prop: "name"
   },
   {
-    label: "订单金额",
-    prop: "url"
+    label: "次数",
+    prop: "name"
   },
   {
-    label: "技师编号",
-    prop: "category"
+    label: "技师提成",
+    prop: "name"
   },
   {
-    label: "订单状态",
-    className: "caller-cell",
-    slot: "callerCount"
+    label: "状态",
+    prop: "name"
   },
   {
-    label: "支付类型",
-    prop: "actionCount",
-    className: "service-api-cell",
-    slot: "actionCount"
-  },
-  {
-    label: "收银员",
-    className: "host-cell",
-    slot: "hostCount"
+    label: "操作",
+    slot: "action"
   }
 ]
 </script>

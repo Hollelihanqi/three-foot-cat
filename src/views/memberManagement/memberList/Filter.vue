@@ -1,16 +1,9 @@
 <template>
   <BaseFilterBox>
-    <yto-form
-      class="filter-form"
-      ref="formInstance"
-      inline
-      :model="store.queryParams"
-      label-width="80px"
-      inline-message
-    >
+    <el-form class="filter-form" ref="formInstance" inline :model="store.queryParams" label-width="80px" inline-message>
       <BaseFormItem w="120px" v-model="store.queryParams.keyword" placeholder="输入会员编号/姓名" />
       <BaseSelect v-model="store.queryParams.category" :options="STATUS" prop="category" />
-    </yto-form>
+    </el-form>
     <div class="action-btn">
       <el-button @click="handleReset">重置</el-button>
       <el-button type="primary" @click="handleSubmit">查询</el-button>
@@ -21,6 +14,7 @@
 import { ref, reactive, watch } from "vue"
 import BaseFilterBox from "@/components/BaseFilterBox.vue"
 import BaseFormItem from "@/components/BaseFormItem.vue"
+import BaseSelect from "@/components/BaseSelect.vue"
 import { useMemberListStore } from "@/store/modules/useMemberList"
 const store = useMemberListStore()
 interface ParamsType {

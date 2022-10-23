@@ -1,13 +1,6 @@
 <template>
   <BaseFilterBox>
-    <yto-form
-      class="filter-form"
-      ref="formInstance"
-      inline
-      :model="store.queryParams"
-      label-width="80px"
-      inline-message
-    >
+    <el-form class="filter-form" ref="formInstance" inline :model="store.queryParams" label-width="80px" inline-message>
       <BaseSelect v-model="store.queryParams.category" :options="STATUS" prop="category" />
       <BaseFormItem w="120px" v-model="store.queryParams.keyword" placeholder="输入订单号查询" />
       <BaseFormItem>
@@ -19,7 +12,7 @@
           end-placeholder="结束日期"
         />
       </BaseFormItem>
-    </yto-form>
+    </el-form>
     <div class="action-btn">
       <el-button @click="handleReset">重置</el-button>
       <el-button type="primary" @click="handleSubmit">查询</el-button>

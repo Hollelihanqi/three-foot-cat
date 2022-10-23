@@ -13,11 +13,11 @@
       :handle-change="handleTableChange"
     >
       <template #action="scope">
-        <!-- <yto-button style="color: #2c3cd8" type="text" @click="handleDetails(scope.index, scope.row)">详情</yto-button>
-        <i class="yto-icon-minus vhi" />
-        <yto-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.index, scope.row)">编辑</yto-button>
-        <i class="yto-icon-minus vhi" />
-        <yto-button style="color: #ff1212" type="text" @click="handleDelete(scope.index, scope.row)">删除</yto-button> -->
+        <!-- <el-button style="color: #2c3cd8" type="text" @click="handleDetails(scope.index, scope.row)">详情</el-button>
+        <i class="el-icon-minus vhi" />
+        <el-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.index, scope.row)">编辑</el-button>
+        <i class="el-icon-minus vhi" />
+        <el-button style="color: #ff1212" type="text" @click="handleDelete(scope.index, scope.row)">删除</el-button> -->
       </template>
     </BaseTable>
   </div>

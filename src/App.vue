@@ -31,4 +31,12 @@ const locale = zhCn
 .el-popper {
   z-index: 666666 !important;
 }
+.view-w {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  @extend .df;
+  @extend .fdc;
+  padding: 16px;
+}
 </style>

@@ -31,7 +31,7 @@ export interface OptionItemProps {
 const props = defineProps({
   label: {
     type: String,
-    default: "用户"
+    default: ""
   },
   prop: {
     type: String,

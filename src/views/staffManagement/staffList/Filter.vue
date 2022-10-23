@@ -1,17 +1,8 @@
 <template>
   <BaseFilterBox>
     <el-form class="filter-form" ref="formInstance" inline :model="store.queryParams" label-width="80px" inline-message>
-      <BaseFormItem w="120px" v-model="store.queryParams.keyword" placeholder="请输入包厢号" label="包厢号" />
-      <BaseFormItem w="120px" v-model="store.queryParams.keyword" placeholder="请输入技师号" label="技师号" />
-      <BaseFormItem>
-        <el-date-picker
-          v-model="store.queryParams.dateTime"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="起钟时间"
-          end-placeholder="下钟时间"
-        />
-      </BaseFormItem>
+      <BaseSelect v-model="store.queryParams.category" label="员工类型" :options="STATUS" prop="category" />
+      <BaseFormItem w="120px" v-model="store.queryParams.keyword" placeholder="输入技师姓名、技师工号、技师手牌查询" />
     </el-form>
     <div class="action-btn">
       <el-button @click="handleReset">重置</el-button>
@@ -20,20 +11,27 @@
   </BaseFilterBox>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, onActivated, watch } from "vue"
+import { ref, reactive, watch } from "vue"
 import BaseFilterBox from "@/components/BaseFilterBox.vue"
 import BaseFormItem from "@/components/BaseFormItem.vue"
-import { useJishiListStore } from "@/store/modules/useJishiList"
-
-const store = useJishiListStore()
+import BaseSelect from "@/components/BaseSelect.vue"
+import { useMemberListStore } from "@/store/modules/useMemberList"
+const store = useMemberListStore()
+interface ParamsType {
+  [propName: string]: any
+}
 const moduleQueryParams = reactive({
   applicationCode: ""
 })
 const formInstance: any = ref(null)
 
-interface ParamsType {
-  [propName: string]: any
-}
+const STATUS = [
+  { label: "全部", value: 0 },
+  { label: "正常", value: 1 },
+  { label: "注销", value: 2 },
+  { label: "挂失", value: 3 },
+  { label: "过期", value: 4 }
+]
 
 // 查询提交
 const handleSubmit = () => {

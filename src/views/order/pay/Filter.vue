@@ -1,13 +1,6 @@
 <template>
   <BaseFilterBox>
-    <yto-form
-      class="filter-form"
-      ref="formInstance"
-      inline
-      :model="store.queryParams"
-      label-width="80px"
-      inline-message
-    >
+    <el-form class="filter-form" ref="formInstance" inline :model="store.queryParams" label-width="80px" inline-message>
       <BaseFormItem>
         <el-date-picker
           v-model="store.queryParams.dateTime"
@@ -17,7 +10,7 @@
           end-placeholder="结束日期"
         />
       </BaseFormItem>
-    </yto-form>
+    </el-form>
     <div class="action-btn">
       <el-button @click="handleReset">可退款记录</el-button>
       <el-button type="primary" @click="handleSubmit">查询</el-button>

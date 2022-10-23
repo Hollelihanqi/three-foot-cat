@@ -1,14 +1,11 @@
 <template>
   <div class="table-box">
     <div class="table-top-box">
-      <el-button type="primary" @click="handleClick(0)">新办会员卡</el-button>
-      <el-button type="primary" @click="handleClick(1)">续充会员卡</el-button>
-      <el-button type="primary" @click="handleClick(2)">退款</el-button>
-      <el-button type="primary" @click="handleClick(3)">挂失</el-button>
-      <el-button type="primary" @click="handleClick(4)">注销</el-button>
-      <el-button type="primary" @click="handleClick(5)">转账</el-button>
-      <el-button type="primary" @click="handleClick(6)">老卡导入模板</el-button>
-      <el-button type="primary" @click="handleClick(7)">上传老卡文件</el-button>
+      <el-button type="primary" @click="handleClick(0)">新增</el-button>
+      <el-button type="primary" @click="handleClick(1)">技师级别设置</el-button>
+      <el-button type="primary" @click="handleClick(2)">部门设置</el-button>
+      <el-button type="primary" @click="handleClick(3)">技师状态修改</el-button>
+      <el-button type="primary" @click="handleClick(4)">今日推荐技师</el-button>
     </div>
     <BaseTable
       :columns="columns"
@@ -19,11 +16,11 @@
       :handle-change="handleTableChange"
     >
       <template #action="scope">
-        <!-- <el-button style="color: #2c3cd8" type="text" @click="handleDetails(scope.index, scope.row)">详情</el-button>
+        <el-button style="color: #2c3cd8" type="text" @click="handleDetail(scope.row)">查看</el-button>
         <i class="el-icon-minus vhi" />
-        <el-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.index, scope.row)">编辑</el-button>
+        <el-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.row)">删除</el-button>
         <i class="el-icon-minus vhi" />
-        <el-button style="color: #ff1212" type="text" @click="handleDelete(scope.index, scope.row)">删除</el-button> -->
+        <el-button style="color: #2c3cd8" type="text" @click="handleDelete(scope.row)">删除</el-button>
       </template>
     </BaseTable>
   </div>
@@ -136,11 +133,6 @@ const modalShow5 = ref(false)
 const modalShow6 = ref(false)
 const modalShow7 = ref(false)
 const rules = {}
-// 导出报表
-const handleExport = () => {}
-
-// 打印报表
-const handlePrint = () => {}
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
   type === "page" && store.setQueryParamsAction({ pageNum: num })
@@ -149,7 +141,12 @@ const handleTableChange = async (type: string, num: number) => {
     store.setQueryParamsAction({ pageNum: 1, pageSize: num })
   }
 }
-
+// 查看
+const handleDetail = (row: any) => {}
+// 修改
+const handleEdit = (row: any) => {}
+// 删除
+const handleDelete = (row: any) => {}
 const handleClick = (idx: number) => {
   switch (idx) {
     case 0:
@@ -189,39 +186,43 @@ const columns = [
     slot: "number"
   },
   {
-    label: "卡类型",
+    label: "工号",
     prop: "systemName"
   },
   {
-    label: "手机号",
+    label: "类型",
     prop: "systemCode"
   },
   {
-    label: "会员卡号",
+    label: "部门",
     prop: "name"
   },
   {
-    label: "实体卡号",
+    label: "等级",
     prop: "code"
   },
   {
-    label: "会员卡余额",
+    label: "性别",
     prop: "url"
   },
   {
-    label: "剩余次数(次卡)",
+    label: "是否考勤",
     prop: "url"
   },
   {
-    label: "状态",
+    label: "是否参与排钟",
     slot: "action"
   },
   {
-    label: "最后一次充卡时间",
+    label: "手牌",
     slot: "action"
   },
   {
-    label: "备注",
+    label: "手机号",
+    slot: "action"
+  },
+  {
+    label: "操作",
     slot: "action"
   }
 ]
