@@ -6,7 +6,6 @@
 
 <script lang="ts" setup>
 import Tables from "./Tables.vue"
-import Filter from "./Filter.vue"
 </script>
 <style lang="scss" scoped>
 .my-table {

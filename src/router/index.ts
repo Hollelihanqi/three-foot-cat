@@ -161,6 +161,98 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: "/staff",
+    component: Layout,
+    name: "Staff",
+    meta: {
+      title: "员工管理",
+      icon: "menu"
+    },
+    children: [
+      {
+        path: "staffList",
+        component: () => import("@/views/staffManagement/staffList/List.vue"),
+        name: "StaffList",
+        meta: {
+          title: "员工列表",
+          icon: "menu"
+        }
+      },
+      {
+        path: "jishiSort",
+        component: () => import("@/views/staffManagement/jishiSort/index.vue"),
+        name: "JishiSort",
+        meta: {
+          title: "技师排序",
+          icon: "menu"
+        }
+      },
+      {
+        path: "jishiGroupingManagement",
+        component: () => import("@/views/staffManagement/jishiGroupingManagement/List.vue"),
+        name: "JishiGroupingManagement",
+        meta: {
+          title: "技师分组管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "jishiClassList",
+        component: () => import("@/views/staffManagement/jishiClassList/List.vue"),
+        name: "JishiClassList",
+        meta: {
+          title: "技师分班管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "attendanceManagement",
+        component: () => import("@/views/staffManagement/attendanceManagement/List.vue"),
+        name: "AttendanceManagement",
+        meta: {
+          title: "考勤管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "jishitichengPlan",
+        component: () => import("@/views/staffManagement/jishitichengPlan/List.vue"),
+        name: "JishitichengPlan",
+        meta: {
+          title: "技师提成方案",
+          icon: "menu"
+        }
+      },
+      {
+        path: "holidayManagement",
+        component: () => import("@/views/staffManagement/holidayManagement/index.vue"),
+        name: "HolidayManagement",
+        meta: {
+          title: "请假管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "staffPermission",
+        component: () => import("@/views/staffManagement/staffPermission/List.vue"),
+        name: "StaffPermission",
+        meta: {
+          title: "员工权限",
+          icon: "menu"
+        }
+      },
+      {
+        path: "secondarySortClass",
+        component: () => import("@/views/staffManagement/secondarySortClass/List.vue"),
+        name: "SecondarySortClass",
+        meta: {
+          title: "二次排班记录",
+          icon: "menu"
+        }
+      }
+    ]
   }
 ]
 

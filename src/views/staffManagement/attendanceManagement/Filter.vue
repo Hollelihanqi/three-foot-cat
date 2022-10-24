@@ -10,7 +10,8 @@
           end-placeholder="结束日期"
         />
       </BaseFormItem>
-      <BaseFormItem w="120px" v-model="store.queryParams.keyword" placeholder="输入客户手机号进行搜索" />
+      <BaseSelect v-model="store.queryParams.category" label="员工类型" :options="STATUS" prop="category" />
+      <BaseFormItem w="120px" v-model="store.queryParams.keyword" placeholder="请输入员工工号" />
     </el-form>
     <div class="action-btn">
       <el-button @click="handleReset">重置</el-button>
@@ -22,6 +23,7 @@
 import { ref, reactive, watch } from "vue"
 import BaseFilterBox from "@/components/BaseFilterBox.vue"
 import BaseFormItem from "@/components/BaseFormItem.vue"
+import BaseSelect from "@/components/BaseSelect.vue"
 import { useMemberListStore } from "@/store/modules/useMemberList"
 const store = useMemberListStore()
 interface ParamsType {
@@ -31,6 +33,7 @@ const moduleQueryParams = reactive({
   applicationCode: ""
 })
 const formInstance: any = ref(null)
+
 const STATUS = [
   { label: "全部", value: 0 },
   { label: "正常", value: 1 },
@@ -38,6 +41,7 @@ const STATUS = [
   { label: "挂失", value: 3 },
   { label: "过期", value: 4 }
 ]
+
 // 查询提交
 const handleSubmit = () => {
   store.getListAction()
