@@ -1,9 +1,9 @@
 <template>
   <div class="filter-box">
     <slot />
-    <div class="action-btn">
+    <!-- <div class="action-btn">
       <slot name="action" />
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts" setup></script>
@@ -18,9 +18,11 @@
   width: 100%;
   .el-form {
     flex: 1;
+    flex-wrap: wrap;
   }
   .el-form-item {
     margin-bottom: 0 !important;
+    margin-right: 0 !important;
   }
 }
 .action-btn {
