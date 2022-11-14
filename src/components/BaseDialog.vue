@@ -17,7 +17,7 @@
   </el-dialog>
 </template>
 <script lang="ts" setup>
-import { defineProps, defineEmits } from "vue"
+import { defineProps, defineEmits, PropType } from "vue"
 const props = defineProps({
   title: {
     type: String,
@@ -44,8 +44,8 @@ const emits = defineEmits(["update:modelValue", "on-ok", "on-cancel"])
 
 // modal 关闭时的回调函数
 const handleClose = () => {
-  emits("update:modelValue", false)
   emits("on-cancel")
+  emits("update:modelValue", false)
 }
 const handleOk = () => {
   emits("on-ok")

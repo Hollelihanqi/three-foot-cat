@@ -13,9 +13,8 @@
 import { ref, reactive, watch } from "vue"
 import BaseFilterBox from "@/components/BaseFilterBox.vue"
 import BaseFormItem from "@/components/BaseFormItem.vue"
-import BaseSelect from "@/components/BaseSelect.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
-const store = useMemberListStore()
+import { useProjectManagementStore } from "@/store/modules/useProjectManagement"
+const store = useProjectManagementStore()
 interface ParamsType {
   [propName: string]: any
 }
@@ -37,9 +36,7 @@ const handleSubmit = () => {
   store.getListAction()
 }
 // 重置
-const handleReset = () => {
-  store.setQueryParamsAction({ action: "reset" })
-}
+const handleReset = () => {}
 
 watch(
   () => store.queryParams.applicationCode,

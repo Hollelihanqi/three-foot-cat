@@ -20,93 +20,99 @@
       </template>
     </BaseTable>
   </div>
-  <BaseDialog v-model="modalShow" w="50%" title="添加支付方式">
-    <el-form :model="store.queryParams" :rules="rules">
+  <BaseDialog
+    v-model="modalShow"
+    w="50%"
+    title="新增"
+    @on-cancel="handleCancel(ruleFormRef)"
+    @on-ok="handleOk(ruleFormRef)"
+  >
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules" label-width="80px">
       <el-row :gutter="16">
         <el-col :span="24">
           <el-form-item label="计费类型">
-            <el-input v-model="store.queryParams.name" placeholder="请输入名称" />
+            <el-input v-model="store.formModel.name" placeholder="请输入名称" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="最低消费">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="费用封顶">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="宾客开房">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+        <el-col :span="24">
+          <el-form-item label="宾客开房" class="bkkf-form-item" label-width="80px">
+            <el-input v-model="store.formModel.name" placeholder="" />
             <span>分钟内按</span>
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
             <span>元收取，之后按一下时间段计费。</span>
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <div>设置计费时间段</div>
-          <div>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="宾客开房">
-                  <el-time-picker
-                    v-model="store.queryParams.value1"
-                    is-range
-                    range-separator="To"
-                    start-placeholder="Start time"
-                    end-placeholder="End time"
-                  />
-                </el-form-item>
-              </el-col>
-              <el-col :span="5">
-                <el-form-item label="每">
-                  <el-input v-model="store.queryParams.name" placeholder="" />
-                </el-form-item>
-              </el-col>
-              <el-col :span="5">
-                <el-form-item label="小时">
-                  <el-input v-model="store.queryParams.name" placeholder="" />
-                </el-form-item>
-              </el-col>
-              <el-col :span="5"> 元 </el-col>
-            </el-row>
-          </div>
+          <el-card shadow="never">
+            <template #header>
+              <span>设置计费时间段</span>
+            </template>
+            <el-form-item label="宾客开房" class="bkkf-form-item">
+              <el-time-picker
+                v-model="store.formModel.value1"
+                is-range
+                range-separator="To"
+                start-placeholder="Start time"
+                end-placeholder="End time"
+              />
+              <span>每</span>
+              <el-input v-model="store.formModel.name" placeholder="" />
+              <span>小时</span>
+              <el-input v-model="store.formModel.name" placeholder="" />
+              <span> 元 </span>
+            </el-form-item>
+          </el-card>
         </el-col>
         <el-col :span="24">
-          <div>不足一个计费单位的部分</div>
-          <div>
+          <el-card shadow="never">
+            <template #header>
+              <span>不足一个计费单位的部分</span>
+            </template>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="时间片">
+                <el-form-item label="时间片" class="bkkf-form-item">
                   <span>每</span>
-                  <el-input v-model="store.queryParams.name" placeholder="" />
+                  <el-input v-model="store.formModel.name" placeholder="" />
                   <span>分钟计费一次</span>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="">
-                  <el-checkbox-group v-model="store.queryParams.type">
+                  <el-checkbox-group v-model="store.formModel.type">
                     <el-checkbox label="第一个计费单位按全额收取" name="type" />
                     <el-checkbox label="不足一个时间片的按一个时间片收取" name="type" />
                   </el-checkbox-group>
                 </el-form-item>
               </el-col>
             </el-row>
-          </div>
+          </el-card>
         </el-col>
       </el-row>
     </el-form>
   </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { ref, onActivated } from "vue"
+import { ref, onActivated, reactive } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseDialog from "@/components/BaseDialog.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
-const store = useMemberListStore()
+import { useChessRulesStore } from "@/store/modules/useChessRules"
+import type { FormInstance, FormRules } from "element-plus"
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
+const store = useChessRulesStore()
 const modalShow = ref(false)
 const modalShow1 = ref(false)
 const modalShow2 = ref(false)
@@ -115,13 +121,13 @@ const modalShow4 = ref(false)
 const modalShow5 = ref(false)
 const modalShow6 = ref(false)
 const modalShow7 = ref(false)
-const rules = {}
+
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
-  type === "page" && store.setQueryParamsAction({ pageNum: num })
+  type === "page" && store.getListAction({ pageNum: num })
   if (type === "size") {
     //页码重置
-    store.setQueryParamsAction({ pageNum: 1, pageSize: num })
+    store.getListAction({ pageNum: 1, pageSize: num })
   }
 }
 // 查看
@@ -159,6 +165,22 @@ const handleClick = (idx: number) => {
     default:
       break
   }
+}
+const handleOk = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid, fields) => {
+    if (valid) {
+      store.createAction()
+    } else {
+      console.log("error submit!", fields)
+    }
+  })
+}
+const handleCancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+  formEl.clearValidate()
+  store.formModel = {}
 }
 onActivated(() => {
   store.getListAction()
@@ -221,6 +243,16 @@ const columns = [
   .vhi {
     transform-origin: center;
     transform: rotate(90deg);
+  }
+}
+:deep(.bkkf-form-item) {
+  .el-form-item__content {
+    @extend .df;
+    @extend .aic;
+    gap: 16px;
+    .el-input {
+      width: 80px;
+    }
   }
 }
 </style>

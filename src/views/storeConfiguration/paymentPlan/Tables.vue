@@ -21,17 +21,23 @@
       </template>
     </BaseTable>
   </div>
-  <BaseDialog v-model="modalShow" w="50%" title="新会员办卡">
-    <el-form :model="store.queryParams" :rules="rules">
+  <BaseDialog
+    v-model="modalShow"
+    w="50%"
+    title="新会员办卡"
+    @on-cancel="handleCancel(ruleFormRef)"
+    @on-ok="handleOk(ruleFormRef)"
+  >
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules">
       <el-row :gutter="16">
-        <el-col :span="20">
+        <el-col :span="18">
           <el-form-item label="方案名称">
-            <el-input v-model="store.queryParams.name" />
+            <el-input v-model="store.formModel.name" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
-          <el-form-item label="启用折扣率">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+        <el-col :span="6">
+          <el-form-item>
+            <el-checkbox label="启用折扣率" v-model="store.formModel.checked" size="large" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -41,18 +47,18 @@
             :columns="columns1"
             :table-data="store.list"
             :total="store.listTotal"
-            :current-page="store.queryParams.pageNum"
-            :page-size="store.queryParams.pageSize"
+            :current-page="store.formModel.pageNum"
+            :page-size="store.formModel.pageSize"
             :handle-change="handleTableChange"
           >
             <template #discount="scope">
               <el-form-item>
-                <el-input type="number" v-model="store.queryParams.name" />
+                <el-input type="number" v-model="store.formModel.name" />
               </el-form-item>
             </template>
             <template #activePrice="scope">
               <el-form-item>
-                <el-input type="number" v-model="store.queryParams.name" />
+                <el-input type="number" v-model="store.formModel.name" />
               </el-form-item>
             </template>
           </BaseTable>
@@ -60,34 +66,38 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="角色权限（勾选后该角色的账号拥有此方案权限，未勾选使用此折扣方案需授权）">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+          <el-form-item>
+            <el-checkbox
+              label="角色权限（勾选后该角色的账号拥有此方案权限，未勾选使用此折扣方案需授权）"
+              v-model="store.formModel.checked"
+              size="large"
+            />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="经理">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+        <el-col :span="3">
+          <el-form-item>
+            <el-checkbox label="经理" v-model="store.formModel.checked" size="large" />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="收银">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+        <el-col :span="3">
+          <el-form-item>
+            <el-checkbox label="收银" v-model="store.formModel.checked" size="large" />
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
   </BaseDialog>
   <BaseDialog v-model="modalShow1" w="50%" title="新会员办卡">
-    <el-form :model="store.queryParams" :rules="rules">
+    <el-form :model="store.formModel" :rules="rules">
       <el-row>
-        <el-col :span="4">
-          <el-form-item label="是否启用会员日">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+        <el-col :span="6">
+          <el-form-item>
+            <el-checkbox label="是否启用会员日" v-model="store.formModel.checked" size="large" />
           </el-form-item>
         </el-col>
-        <el-col :span="20">
+        <el-col :span="18">
           <el-form-item label="折扣方案">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
               <el-option label="Zone one" value="shanghai" />
               <el-option label="Zone two" value="beijing" />
             </el-select>
@@ -102,8 +112,8 @@
       </el-row>
       <el-row :gutter="16">
         <el-col :span="3" v-for="item in days">
-          <el-form-item :label="item">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+          <el-form-item>
+            <el-checkbox :label="item" v-model="store.formModel.checked" size="large" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -116,21 +126,21 @@
       <el-row>
         <el-col :span="24">
           <el-form-item>
-            <el-checkbox label="星期一" v-model="store.queryParams.checked" size="large" />
-            <el-checkbox label="星期二" v-model="store.queryParams.checked" size="large" />
-            <el-checkbox label="星期三" v-model="store.queryParams.checked" size="large" />
-            <el-checkbox label="星期四" v-model="store.queryParams.checked" size="large" />
-            <el-checkbox label="星期五" v-model="store.queryParams.checked" size="large" />
-            <el-checkbox label="星期六" v-model="store.queryParams.checked" size="large" />
-            <el-checkbox label="星期日" v-model="store.queryParams.checked" size="large" />
+            <el-checkbox label="星期一" v-model="store.formModel.checked" size="large" />
+            <el-checkbox label="星期二" v-model="store.formModel.checked" size="large" />
+            <el-checkbox label="星期三" v-model="store.formModel.checked" size="large" />
+            <el-checkbox label="星期四" v-model="store.formModel.checked" size="large" />
+            <el-checkbox label="星期五" v-model="store.formModel.checked" size="large" />
+            <el-checkbox label="星期六" v-model="store.formModel.checked" size="large" />
+            <el-checkbox label="星期日" v-model="store.formModel.checked" size="large" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
           <span>选择享受会员日折扣的会员卡</span>
-          <el-form-item label="所有会员卡">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+          <el-form-item>
+            <el-checkbox label="所有会员卡" v-model="store.formModel.checked" size="large" />
           </el-form-item>
           <el-divider />
         </el-col>
@@ -138,7 +148,7 @@
       <el-row>
         <!-- <el-col :span="6">
           <el-form-item label="所有会员卡">
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+            <el-checkbox v-model="store.formModel.checked" size="large" />
           </el-form-item>
         </el-col> -->
       </el-row>
@@ -146,13 +156,19 @@
   </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { ref, onActivated } from "vue"
+import { ref, onActivated, reactive } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseDialog from "@/components/BaseDialog.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
+import { usePaymentPlanStore } from "@/store/modules/usePaymentPlan"
 import moment from "moment"
+import type { FormInstance, FormRules } from "element-plus"
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
 const days = moment().daysInMonth()
-const store = useMemberListStore()
+const store = usePaymentPlanStore()
 const modalShow = ref(false)
 const modalShow1 = ref(false)
 const modalShow2 = ref(false)
@@ -161,13 +177,12 @@ const modalShow4 = ref(false)
 const modalShow5 = ref(false)
 const modalShow6 = ref(false)
 const modalShow7 = ref(false)
-const rules = {}
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
-  type === "page" && store.setQueryParamsAction({ pageNum: num })
+  type === "page" && store.getListAction({ pageNum: num })
   if (type === "size") {
     //页码重置
-    store.setQueryParamsAction({ pageNum: 1, pageSize: num })
+    store.getListAction({ pageNum: 1, pageSize: num })
   }
 }
 // 查看
@@ -205,6 +220,22 @@ const handleClick = (idx: number) => {
     default:
       break
   }
+}
+const handleOk = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid, fields) => {
+    if (valid) {
+      store.createAction()
+    } else {
+      console.log("error submit!", fields)
+    }
+  })
+}
+const handleCancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+  formEl.clearValidate()
+  store.formModel = {}
 }
 onActivated(() => {
   store.getListAction()

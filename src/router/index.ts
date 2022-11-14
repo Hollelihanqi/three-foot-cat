@@ -601,6 +601,89 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: "/appletConfiguration",
+    component: Layout,
+    name: "AppletConfiguration",
+    meta: {
+      title: "小程序配置",
+      icon: "menu"
+    },
+    children: [
+      {
+        path: "storeManagement",
+        component: () => import("@/views/appletConfiguration/storeManagement/index.vue"),
+        name: "StoreManagement",
+        meta: {
+          title: "门店管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "technologistUDCManagement",
+        component: () => import("@/views/appletConfiguration/technologistUDCManagement/List.vue"),
+        name: "TechnologistUDCManagement",
+        meta: {
+          title: "技师上下钟",
+          icon: "menu"
+        }
+      },
+      {
+        path: "technologistManagement",
+        component: () => import("@/views/appletConfiguration/technologistManagement/List.vue"),
+        name: "TechnologistManagement",
+        meta: {
+          title: "技师管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "announcementManagement",
+        component: () => import("@/views/appletConfiguration/announcementManagement/List.vue"),
+        name: "AnnouncementManagement",
+        meta: {
+          title: "公告管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "activitiyManagement",
+        component: () => import("@/views/appletConfiguration/activitiyManagement/List.vue"),
+        name: "ActivitiyManagement",
+        meta: {
+          title: "活动管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "cloudClockUserManagement",
+        component: () => import("@/views/appletConfiguration/cloudClockUserManagement/List.vue"),
+        name: "CloudClockUserManagement",
+        meta: {
+          title: "云排钟用户管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "minAppUserManagement",
+        component: () => import("@/views/appletConfiguration/minAppUserManagement/List.vue"),
+        name: "MinAppUserManagement",
+        meta: {
+          title: "小程序用户管理",
+          icon: "menu"
+        }
+      },
+      {
+        path: "cloudClockRuleManagement",
+        component: () => import("@/views/appletConfiguration/cloudClockRuleManagement/List.vue"),
+        name: "CloudClockRuleManagement",
+        meta: {
+          title: "云排钟角色管理",
+          icon: "menu"
+        }
+      }
+    ]
   }
 ]
 

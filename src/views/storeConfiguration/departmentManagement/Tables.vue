@@ -12,25 +12,31 @@
       :handle-change="handleTableChange"
     >
       <template #action="scope">
-        <el-button style="color: #2c3cd8" type="text" @click="handleDetail(scope.row)">查看</el-button>
+        <el-button style="color: #2c3cd8" type="link" @click="handleDetail(scope.row)">查看</el-button>
         <i class="el-icon-minus vhi" />
-        <el-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.row)">修改</el-button>
+        <el-button style="color: #2c3cd8" type="link" @click="handleEdit(scope.row)">修改</el-button>
         <i class="el-icon-minus vhi" />
-        <el-button style="color: #2c3cd8" type="text" @click="handleDelete(scope.row)">删除</el-button>
+        <el-button style="color: #2c3cd8" type="link" @click="handleDelete(scope.row)">删除</el-button>
       </template>
     </BaseTable>
   </div>
-  <BaseDialog v-model="modalShow" w="50%" title="添加新的部门">
-    <el-form :model="store.queryParams" :rules="rules">
+  <BaseDialog
+    v-model="modalShow"
+    w="50%"
+    title="新增"
+    @on-cancel="handleCancel(ruleFormRef)"
+    @on-ok="handleCreate(ruleFormRef)"
+  >
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules">
       <el-row :gutter="16">
         <el-col :span="24">
-          <el-form-item label="部门编码">
-            <el-input v-model="store.queryParams.name" />
+          <el-form-item label="部门名称" prop="dname">
+            <el-input v-model="store.formModel.dname" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="部门名称">
-            <el-input v-model="store.queryParams.name" />
+          <el-form-item label="部门编码" prop="dcode">
+            <el-input v-model="store.formModel.dcode" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -38,11 +44,13 @@
   </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { ref, onActivated } from "vue"
+import { ref, onActivated, reactive } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseDialog from "@/components/BaseDialog.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
-const store = useMemberListStore()
+import { useDepartmentManagementStore } from "@/store/modules/useDepartmentManagement"
+import type { FormInstance, FormRules } from "element-plus"
+const store = useDepartmentManagementStore()
+const ruleFormRef = ref<FormInstance>()
 const modalShow = ref(false)
 const modalShow1 = ref(false)
 const modalShow2 = ref(false)
@@ -51,13 +59,16 @@ const modalShow4 = ref(false)
 const modalShow5 = ref(false)
 const modalShow6 = ref(false)
 const modalShow7 = ref(false)
-const rules = {}
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
-  type === "page" && store.setQueryParamsAction({ pageNum: num })
+  type === "page" && store.getListAction({ pageNum: num })
   if (type === "size") {
     //页码重置
-    store.setQueryParamsAction({ pageNum: 1, pageSize: num })
+    store.getListAction({ pageNum: 1, pageSize: num })
   }
 }
 // 查看
@@ -66,6 +77,23 @@ const handleDetail = (row: any) => {}
 const handleEdit = (row: any) => {}
 // 删除
 const handleDelete = (row: any) => {}
+// 新增
+const handleCreate = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid, fields) => {
+    if (valid) {
+      store.createAction()
+    } else {
+      console.log("error submit!", fields)
+    }
+  })
+}
+const handleCancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+  formEl.clearValidate()
+  store.formModel = {}
+}
 const handleClick = (idx: number) => {
   switch (idx) {
     case 0:

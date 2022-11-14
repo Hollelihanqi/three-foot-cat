@@ -20,32 +20,38 @@
       </template>
     </BaseTable>
   </div>
-  <BaseDialog v-model="modalShow" w="50%" title="添加支付方式">
-    <el-form :model="store.queryParams" :rules="rules">
+  <BaseDialog
+    v-model="modalShow"
+    w="50%"
+    title="添加支付方式"
+    @on-cancel="handleCancel(ruleFormRef)"
+    @on-ok="handleOk(ruleFormRef)"
+  >
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules" label-width="80px">
       <el-row :gutter="16">
         <el-col :span="12">
           <el-form-item label="方式名称">
-            <el-input v-model="store.queryParams.name" placeholder="请输入名称" />
+            <el-input v-model="store.formModel.name" placeholder="请输入名称" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="顺序号">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item>
-            <el-switch v-model="store.queryParams.value" size="large" inactive-text="是否记录营业收入" />
+          <el-form-item label-width="0px">
+            <el-switch v-model="store.formModel.value" size="large" inactive-text="是否记录营业收入" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item>
-            <el-switch v-model="store.queryParams.value" size="large" inactive-text="是否记录资金收入" />
+          <el-form-item label-width="0px">
+            <el-switch v-model="store.formModel.value" size="large" inactive-text="是否记录资金收入" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item>
-            <el-switch v-model="store.queryParams.value" size="large" inactive-text="是否可用" />
+          <el-form-item label-width="0px">
+            <el-switch v-model="store.formModel.value" size="large" inactive-text="是否可用" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -53,11 +59,17 @@
   </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { ref, onActivated } from "vue"
+import { ref, onActivated, reactive } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseDialog from "@/components/BaseDialog.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
-const store = useMemberListStore()
+import { usePaymentMethodStore } from "@/store/modules/usePaymentMethod"
+import type { FormInstance, FormRules } from "element-plus"
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
+const store = usePaymentMethodStore()
 const modalShow = ref(false)
 const modalShow1 = ref(false)
 const modalShow2 = ref(false)
@@ -66,13 +78,13 @@ const modalShow4 = ref(false)
 const modalShow5 = ref(false)
 const modalShow6 = ref(false)
 const modalShow7 = ref(false)
-const rules = {}
+
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
-  type === "page" && store.setQueryParamsAction({ pageNum: num })
+  type === "page" && store.getListAction({ pageNum: num })
   if (type === "size") {
     //页码重置
-    store.setQueryParamsAction({ pageNum: 1, pageSize: num })
+    store.getListAction({ pageNum: 1, pageSize: num })
   }
 }
 // 查看
@@ -110,6 +122,22 @@ const handleClick = (idx: number) => {
     default:
       break
   }
+}
+const handleOk = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid, fields) => {
+    if (valid) {
+      store.createAction()
+    } else {
+      console.log("error submit!", fields)
+    }
+  })
+}
+const handleCancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+  formEl.clearValidate()
+  store.formModel = {}
 }
 onActivated(() => {
   store.getListAction()

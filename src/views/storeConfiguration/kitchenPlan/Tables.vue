@@ -20,17 +20,23 @@
       </template>
     </BaseTable>
   </div>
-  <BaseDialog v-model="modalShow" w="50%" title="新增">
-    <el-form :model="store.queryParams" :rules="rules">
+  <BaseDialog
+    v-model="modalShow"
+    w="60%"
+    title="新增"
+    @on-cancel="handleCancel(ruleFormRef)"
+    @on-ok="handleOk(ruleFormRef)"
+  >
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules" label-width="100px">
       <el-row :gutter="16">
-        <el-col :span="24">
+        <el-col :span="12">
           <el-form-item label="方案名称">
-            <el-input v-model="store.queryParams.name" />
+            <el-input v-model="store.formModel.name" />
           </el-form-item>
         </el-col>
-        <el-col :span="24">
+        <el-col :span="12">
           <el-form-item label="选择区域">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
               <el-option label="Zone one" value="shanghai" />
               <el-option label="Zone two" value="beijing" />
             </el-select>
@@ -38,38 +44,37 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="水吧编号">
-            <el-input v-model="store.queryParams.name" />
+            <el-input v-model="store.formModel.name" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="打印机选择">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
               <el-option label="Zone one" value="shanghai" />
               <el-option label="Zone two" value="beijing" />
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="飞鹅打印机编号">
-            <el-input v-model="store.queryParams.name" />
+          <el-form-item label="飞鹅打印机编号" label-width="120px">
+            <el-input v-model="store.formModel.name" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="是否接收包厢呼叫服务">
-            <el-switch v-model="store.queryParams.delivery" />
+          <el-form-item label="是否接收包厢呼叫服务" label-width="160px">
+            <el-switch v-model="store.formModel.delivery" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="4">
-          <el-form-item label="全选">
-            <el-checkbox label="大项目" name="type" />
+          <el-form-item label="">
+            <el-checkbox label="大项目全选" name="type" />
           </el-form-item>
         </el-col>
-        <el-col :span="20"> 大项目 </el-col>
         <el-col :span="24">
           <el-form-item>
-            <el-checkbox-group v-model="store.queryParams.type">
+            <el-checkbox-group v-model="store.formModel.type">
               <el-checkbox label="Online activities" name="type" />
               <el-checkbox label="Promotion activities" name="type" />
               <el-checkbox label="Offline activities" name="type" />
@@ -80,14 +85,13 @@
       </el-row>
       <el-row>
         <el-col :span="4">
-          <el-form-item label="全选">
-            <el-checkbox label="小项目" name="type" />
+          <el-form-item label="">
+            <el-checkbox label="小项目全选" name="type" />
           </el-form-item>
         </el-col>
-        <el-col :span="20"> 小项目 </el-col>
         <el-col :span="24">
           <el-form-item>
-            <el-checkbox-group v-model="store.queryParams.type">
+            <el-checkbox-group v-model="store.formModel.type">
               <el-checkbox label="Online activities" name="type" />
               <el-checkbox label="Promotion activities" name="type" />
               <el-checkbox label="Offline activities" name="type" />
@@ -98,14 +102,13 @@
       </el-row>
       <el-row>
         <el-col :span="4">
-          <el-form-item label="全选">
-            <el-checkbox label="茶水" name="type" />
+          <el-form-item label="">
+            <el-checkbox label="茶水全选" name="type" />
           </el-form-item>
         </el-col>
-        <el-col :span="20"> 茶水 </el-col>
         <el-col :span="24">
           <el-form-item>
-            <el-checkbox-group v-model="store.queryParams.type">
+            <el-checkbox-group v-model="store.formModel.type">
               <el-checkbox label="Online activities" name="type" />
               <el-checkbox label="Promotion activities" name="type" />
               <el-checkbox label="Offline activities" name="type" />
@@ -116,14 +119,13 @@
       </el-row>
       <el-row>
         <el-col :span="4">
-          <el-form-item label="全选">
-            <el-checkbox label="酒水" name="type" />
+          <el-form-item label="">
+            <el-checkbox label="酒水全选" name="type" />
           </el-form-item>
         </el-col>
-        <el-col :span="20"> 酒水 </el-col>
         <el-col :span="24">
           <el-form-item>
-            <el-checkbox-group v-model="store.queryParams.type">
+            <el-checkbox-group v-model="store.formModel.type">
               <el-checkbox label="Online activities" name="type" />
               <el-checkbox label="Promotion activities" name="type" />
               <el-checkbox label="Offline activities" name="type" />
@@ -136,13 +138,19 @@
   </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { ref, onActivated } from "vue"
+import { ref, onActivated, reactive } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseDialog from "@/components/BaseDialog.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
+import { useKitchenPlanStore } from "@/store/modules/useKitchenPlan"
 import moment from "moment"
+import type { FormInstance, FormRules } from "element-plus"
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
 const days = moment().daysInMonth()
-const store = useMemberListStore()
+const store = useKitchenPlanStore()
 const modalShow = ref(false)
 const modalShow1 = ref(false)
 const modalShow2 = ref(false)
@@ -151,13 +159,12 @@ const modalShow4 = ref(false)
 const modalShow5 = ref(false)
 const modalShow6 = ref(false)
 const modalShow7 = ref(false)
-const rules = {}
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
-  type === "page" && store.setQueryParamsAction({ pageNum: num })
+  type === "page" && store.getListAction({ pageNum: num })
   if (type === "size") {
     //页码重置
-    store.setQueryParamsAction({ pageNum: 1, pageSize: num })
+    store.getListAction({ pageNum: 1, pageSize: num })
   }
 }
 // 查看
@@ -195,6 +202,22 @@ const handleClick = (idx: number) => {
     default:
       break
   }
+}
+const handleOk = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid, fields) => {
+    if (valid) {
+      store.createAction()
+    } else {
+      console.log("error submit!", fields)
+    }
+  })
+}
+const handleCancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+  formEl.clearValidate()
+  store.formModel = {}
 }
 onActivated(() => {
   store.getListAction()

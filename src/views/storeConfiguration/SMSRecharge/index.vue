@@ -1,8 +1,8 @@
 <template>
   <div class="view-w">
-    <el-form :model="store.queryParams" :rules="rules">
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules" label-width="100px">
       <el-form-item label="短信模式">
-        <el-radio-group v-model="store.queryParams.resource">
+        <el-radio-group v-model="store.formModel.resource">
           <el-radio label="关闭" />
           <el-radio label="代扣发送" />
           <el-radio label="用户自己消费发送" />
@@ -10,16 +10,16 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="剩余条数">
-        <el-input v-model="store.queryParams.name" placeholder="" />
+        <el-input v-model="store.formModel.name" placeholder="" />
       </el-form-item>
       <el-form-item label="累计冲值条数">
-        <el-input v-model="store.queryParams.name" placeholder="" />
+        <el-input v-model="store.formModel.name" placeholder="" />
       </el-form-item>
       <el-form-item label="充值金额">
-        <el-input v-model="store.queryParams.name" placeholder="" />
+        <el-input v-model="store.formModel.name" placeholder="" />
       </el-form-item>
       <el-form-item label="充值条数">
-        <el-input v-model="store.queryParams.name" placeholder="" />
+        <el-input v-model="store.formModel.name" placeholder="" />
       </el-form-item>
       <el-form-item label="应付金额">
         <div>
@@ -37,9 +37,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useMemberListStore } from "@/store/modules/useMemberList"
-const store = useMemberListStore()
-const rules = {}
+import { ref, reactive } from "vue"
+import { useSMSRechargeStore } from "@/store/modules/useSMSRecharge"
+import type { FormInstance, FormRules } from "element-plus"
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
+const store = useSMSRechargeStore()
 </script>
 <style lang="scss" scoped>
 .view-w {

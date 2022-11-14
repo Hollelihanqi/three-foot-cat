@@ -20,8 +20,14 @@
       </template>
     </BaseTable>
   </div>
-  <BaseDialog v-model="modalShow" w="50%" title="添加">
-    <el-form :model="store.queryParams" :rules="rules">
+  <BaseDialog
+    v-model="modalShow"
+    w="60%"
+    title="添加"
+    @on-cancel="handleCancel(ruleFormRef)"
+    @on-ok="handleOk(ruleFormRef)"
+  >
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules" label-width="140px">
       <el-row :gutter="16">
         <el-col :span="24">
           <el-tabs v-model="activeName">
@@ -35,17 +41,17 @@
       <el-row v-if="activeName === '0'">
         <el-col :span="12">
           <el-form-item label="服务名称">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="加钟价">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="服务项目类型">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
               <el-option label="Zone one" value="shanghai" />
               <el-option label="Zone two" value="beijing" />
             </el-select>
@@ -53,42 +59,42 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="排钟提成">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="顺序号">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="点钟提成">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="一个钟时长（分钟）">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="括钟提成">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="加钟时长（分钟）">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="加钟提成">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="服务所属部门">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
               <el-option label="Zone one" value="shanghai" />
               <el-option label="Zone two" value="beijing" />
             </el-select>
@@ -96,50 +102,49 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="买钟提成">
-            <el-input v-model="store.queryParams.name" placeholder="" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="项目是否参与技师排钟系统">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
-              <el-option label="Zone one" value="shanghai" />
-              <el-option label="Zone two" value="beijing" />
-            </el-select>
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="排钟推荐费">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="该项目为小项目时是否动牌">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+          <el-form-item label="点钟推荐费">
+            <el-input v-model="store.formModel.name" placeholder="" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="门市价">
+            <el-input v-model="store.formModel.name" placeholder="" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="加钟推荐费">
+            <el-input v-model="store.formModel.name" placeholder="" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="项目是否参与技师排钟系统" label-width="auto">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
               <el-option label="Zone one" value="shanghai" />
               <el-option label="Zone two" value="beijing" />
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="点钟推荐费">
-            <el-input v-model="store.queryParams.name" placeholder="" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="门市价">
-            <el-input v-model="store.queryParams.name" placeholder="" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="加钟推荐费">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+        <el-col :span="24">
+          <el-form-item label="该项目为小项目时是否动牌" label-width="auto">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
+              <el-option label="Zone one" value="shanghai" />
+              <el-option label="Zone two" value="beijing" />
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row v-if="activeName === '1'">
         <el-col :span="24">
-          <span>选择做此项目的技师</span>
-          <el-checkbox v-model="store.queryParams.checked" size="large" />
+          <el-checkbox label="全选" v-model="store.formModel.checked" size="large" />
         </el-col>
         <el-col>
           <!-- <el-checkbox-group v-model="checkboxGroup1" size="large">
@@ -154,7 +159,7 @@
         <el-col :span="4">
           <div class="p-item">
             <img src="" alt="" />
-            <el-checkbox v-model="store.queryParams.checked" size="large" />
+            <el-checkbox v-model="store.formModel.checked" size="large" />
           </div>
         </el-col>
       </el-row>
@@ -162,11 +167,17 @@
   </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { ref, onActivated } from "vue"
+import { ref, onActivated, reactive } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseDialog from "@/components/BaseDialog.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
-const store = useMemberListStore()
+import { useProjectManagementStore } from "@/store/modules/useProjectManagement"
+import type { FormInstance, FormRules } from "element-plus"
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
+const store = useProjectManagementStore()
 const modalShow = ref(false)
 const modalShow1 = ref(false)
 const modalShow2 = ref(false)
@@ -176,13 +187,13 @@ const modalShow5 = ref(false)
 const modalShow6 = ref(false)
 const modalShow7 = ref(false)
 const activeName = ref("0")
-const rules = {}
+
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
-  type === "page" && store.setQueryParamsAction({ pageNum: num })
+  type === "page" && store.getListAction({ pageNum: num })
   if (type === "size") {
     //页码重置
-    store.setQueryParamsAction({ pageNum: 1, pageSize: num })
+    store.getListAction({ pageNum: 1, pageSize: num })
   }
 }
 // 查看
@@ -220,6 +231,22 @@ const handleClick = (idx: number) => {
     default:
       break
   }
+}
+const handleOk = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid, fields) => {
+    if (valid) {
+      store.createAction()
+    } else {
+      console.log("error submit!", fields)
+    }
+  })
+}
+const handleCancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+  formEl.clearValidate()
+  store.formModel = {}
 }
 onActivated(() => {
   store.getListAction()

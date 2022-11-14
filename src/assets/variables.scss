@@ -22,3 +22,8 @@ $m-color3: #002855;
 .jcsb {
   justify-content: space-between;
 }
+.label-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

@@ -21,22 +21,28 @@
       </template>
     </BaseTable>
   </div>
-  <BaseDialog v-model="modalShow" w="50%" title="添加">
-    <el-form :model="store.queryParams" :rules="rules">
+  <BaseDialog
+    v-model="modalShow"
+    w="50%"
+    title="添加"
+    @on-cancel="handleCancel(ruleFormRef)"
+    @on-ok="handleOk(ruleFormRef)"
+  >
+    <el-form ref="ruleFormRef" :model="store.formModel" :rules="rules" label-width="80px">
       <el-row>
         <el-col :span="12">
           <el-form-item label="手牌号码">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="手牌ID">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="性别">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-select style="width: 100%" v-model="store.formModel.name" placeholder="请选择">
               <el-option label="男" value="0" />
               <el-option label="女" value="1" />
             </el-select>
@@ -44,36 +50,38 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="顺序号">
-            <el-input v-model="store.queryParams.name" placeholder="" />
+            <el-input v-model="store.formModel.name" placeholder="" />
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
   </BaseDialog>
-  <BaseDialog v-model="modalShow1" w="50%" title="浴资参数设置">
-    <el-form :model="store.queryParams" :rules="rules">
-      <el-row>
+  <BaseDialog v-model="modalShow1" w="60%" title="浴资参数设置">
+    <el-form :model="store.formModel" :rules="rules">
+      <el-row :gutter="8">
         <el-col :span="6">
-          <el-card>
+          <el-card style="height: 100%">
             <template #header>
               <div class="card-header">
                 <span>自动计算浴资</span>
               </div>
             </template>
-            <el-form-item label="开启后，手牌开牌后，自动添加浴资项目">
-              <el-switch v-model="store.queryParams.delivery" />
+            <el-form-item class="label-vertical">
+              <span class="sub-feadback">开启后，手牌开牌后，自动添加浴资项目。</span>
+              <el-switch v-model="store.formModel.delivery" />
             </el-form-item>
           </el-card>
         </el-col>
         <el-col :span="6">
-          <el-card>
+          <el-card style="height: 100%">
             <template #header>
               <div class="card-header">
                 <span>浴资项目</span>
               </div>
             </template>
-            <el-form-item label="自动添加的浴资项目">
-              <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-form-item class="label-vertical">
+              <span class="sub-feadback">自动添加的浴资项目</span>
+              <el-select v-model="store.formModel.name" placeholder="请选择">
                 <el-option label="Zone one" value="shanghai" />
                 <el-option label="Zone two" value="beijing" />
               </el-select>
@@ -81,39 +89,41 @@
           </el-card>
         </el-col>
         <el-col :span="6">
-          <el-card>
+          <el-card style="height: 100%">
             <template #header>
               <div class="card-header">
                 <span>计算周期</span>
               </div>
             </template>
-            <el-form-item label="浴资计算周期，单位分钟">
-              <el-input type="number" v-model="store.queryParams.name" />
+            <el-form-item class="label-vertical">
+              <span class="sub-feadback">浴资计算周期，单位分钟</span>
+              <el-input type="number" v-model="store.formModel.name" />
             </el-form-item>
           </el-card>
         </el-col>
         <el-col :span="6">
-          <el-card>
+          <el-card style="height: 100%">
             <template #header>
               <div class="card-header">
                 <span>延迟添加浴资</span>
               </div>
             </template>
-            <el-form-item label="开牌后延迟">
-              <el-input type="number" v-model="store.queryParams.name" />
+            <el-form-item class="label-vertical">
+              <span class="sub-feadback">开牌后延迟 x 分钟后自动添加浴资项目</span>
+              <el-input type="number" v-model="store.formModel.name" />
             </el-form-item>
           </el-card>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row style="margin-top: 18px">
         <el-col :span="12">
           <el-form-item label="增加过夜费的时间点">
-            <el-time-picker v-model="store.queryParams.value1" placeholder="" />
+            <el-time-picker v-model="store.formModel.value1" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="增加的过夜费项目">
-            <el-select v-model="store.queryParams.name" placeholder="请选择">
+            <el-select v-model="store.formModel.name" placeholder="请选择">
               <el-option label="Zone one" value="shanghai" />
               <el-option label="Zone two" value="beijing" />
             </el-select>
@@ -126,8 +136,8 @@
             :columns="columns1"
             :table-data="store.list"
             :total="store.listTotal"
-            :current-page="store.queryParams.pageNum"
-            :page-size="store.queryParams.pageSize"
+            :current-page="store.formModel.pageNum"
+            :page-size="store.formModel.pageSize"
             :handle-change="handleTableChange"
             @selection-change="handleSelectionChange"
           >
@@ -141,18 +151,23 @@
   </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { ref, onActivated } from "vue"
+import { ref, onActivated, reactive } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
 import BaseDialog from "@/components/BaseDialog.vue"
-import { useMemberListStore } from "@/store/modules/useMemberList"
-
+import { useHandManagementStore } from "@/store/modules/useHandManagement"
+import type { FormInstance, FormRules } from "element-plus"
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  dname: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
+  dcode: [{ required: true, message: "请输入部门编码", trigger: "blur" }]
+})
 interface User {
   date: string
   name: string
   address: string
 }
 
-const store = useMemberListStore()
+const store = useHandManagementStore()
 const modalShow = ref(false)
 const modalShow1 = ref(false)
 const modalShow2 = ref(false)
@@ -163,13 +178,12 @@ const modalShow6 = ref(false)
 const modalShow7 = ref(false)
 const activeName = ref("0")
 const multipleSelection = ref<User[]>([])
-const rules = {}
 // 分页选择
 const handleTableChange = async (type: string, num: number) => {
-  type === "page" && store.setQueryParamsAction({ pageNum: num })
+  type === "page" && store.getListAction({ pageNum: num })
   if (type === "size") {
     //页码重置
-    store.setQueryParamsAction({ pageNum: 1, pageSize: num })
+    store.getListAction({ pageNum: 1, pageSize: num })
   }
 }
 // 查看
@@ -211,6 +225,22 @@ const handleClick = (idx: number) => {
 // 多选
 const handleSelectionChange = (val: User[]) => {
   multipleSelection.value = val
+}
+const handleOk = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid, fields) => {
+    if (valid) {
+      store.createAction()
+    } else {
+      console.log("error submit!", fields)
+    }
+  })
+}
+const handleCancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+  formEl.clearValidate()
+  store.formModel = {}
 }
 onActivated(() => {
   store.getListAction()
