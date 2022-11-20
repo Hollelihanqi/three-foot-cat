@@ -51,10 +51,7 @@ const handleCancel = () => {
   emits("update:modelValue", false)
 }
 const handleOk = () => {}
-const handleChange = (item, value) => {
-  console.log(item)
-  console.log(value)
-}
+const handleChange = () => {}
 onMounted(() => {})
 watch(
   () => props.modelValue,

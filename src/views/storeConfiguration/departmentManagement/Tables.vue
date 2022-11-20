@@ -12,11 +12,11 @@
       :handle-change="handleTableChange"
     >
       <template #action="scope">
-        <el-button style="color: #2c3cd8" type="link" @click="handleDetail(scope.row)">查看</el-button>
+        <el-button style="color: #2c3cd8" type="text" @click="handleDetail(scope.row)">查看</el-button>
         <i class="el-icon-minus vhi" />
-        <el-button style="color: #2c3cd8" type="link" @click="handleEdit(scope.row)">修改</el-button>
+        <el-button style="color: #2c3cd8" type="text" @click="handleEdit(scope.row)">修改</el-button>
         <i class="el-icon-minus vhi" />
-        <el-button style="color: #2c3cd8" type="link" @click="handleDelete(scope.row)">删除</el-button>
+        <el-button style="color: #2c3cd8" type="text" @click="handleDelete(scope.row)">删除</el-button>
       </template>
     </BaseTable>
   </div>

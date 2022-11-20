@@ -13,6 +13,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
     "build:stage": "vue-tsc --noEmit && vite build --mode staging",
     "build:prod": "vue-tsc --noEmit && vite build",
     "preview:stage": "pnpm build:stage && vite preview",
@@ -26,7 +27,7 @@
     "@element-plus/icons-vue": "^2.0.9",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
-    "element-plus": "^2.2.15",
+    "element-plus": "2.2.22",
     "js-cookie": "^3.0.1",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4",
