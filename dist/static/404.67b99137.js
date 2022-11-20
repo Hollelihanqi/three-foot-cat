@@ -1,0 +1,1 @@
+import{_ as s,o as a,b as e,D as d,G as o,f as t}from"./index.a082be67.js";const c={},n=s=>(d("data-v-34824612"),s=s(),o(),s),r=[n((()=>t("p",{class:"code"},"404",-1))),n((()=>t("p",{class:"describe"},"未找到你想要的页面",-1)))];const i=s(c,[["render",function(s,d){return a(),e("div",null,r)}],["__scopeId","data-v-34824612"]]);export{i as default};
