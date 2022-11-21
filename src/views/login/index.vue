@@ -28,6 +28,7 @@ const loginForm: ILoginForm = reactive({
   password: "12345678",
   code: "abcd"
 })
+
 /** 登录表单校验规则 */
 const loginFormRules: FormRules = {
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
@@ -37,6 +38,7 @@ const loginFormRules: FormRules = {
   ],
   code: [{ required: true, message: "请输入验证码", trigger: "blur" }]
 }
+
 /** 登录逻辑 */
 const handleLogin = () => {
   loginFormRef.value?.validate((valid: boolean) => {
