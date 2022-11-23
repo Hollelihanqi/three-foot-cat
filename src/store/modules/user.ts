@@ -9,7 +9,7 @@ import type { RouteRecordRaw } from "vue-router"
 
 export const useUserStore = defineStore("user", () => {
   const token = ref<string>(getToken() || "")
-  const roles = ref<string[]>(["admin"])
+  const roles = ref<string[]>([])
 
   /** 设置角色数组 */
   const setRoles = (value: string[]) => {
@@ -35,14 +35,16 @@ export const useUserStore = defineStore("user", () => {
   /** 获取用户详情 */
   const getInfo = () => {
     return new Promise((resolve, reject) => {
-      getUserInfoApi()
-        .then((res: any) => {
-          roles.value = res.data.user.roles
-          resolve(res)
-        })
-        .catch((error) => {
-          reject(error)
-        })
+      roles.value = ["admin"]
+      resolve({})
+      // getUserInfoApi()
+      //   .then((res: any) => {
+      //     roles.value = res.data.user.roles
+      //     resolve(res)
+      //   })
+      //   .catch((error) => {
+      //     reject(error)
+      //   })
     })
   }
   /** 切换角色 */
