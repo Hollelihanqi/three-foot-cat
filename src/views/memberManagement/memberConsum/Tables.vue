@@ -2,7 +2,6 @@
   <div class="table-box">
     <div class="table-top-box">
       <el-button type="primary" @click="handleExport">导出报表</el-button>
-      <!-- <BaseButton class="new-add-btn" @click="handlePrint">打印报表</BaseButton> -->
     </div>
     <BaseTable
       :columns="columns"
@@ -25,7 +24,6 @@
 <script lang="ts" setup>
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
-import BaseButton from "@/components/BaseButton.vue"
 import { useReserveOrderStore } from "@/store/modules/useReserveOrder"
 const store = useReserveOrderStore()
 

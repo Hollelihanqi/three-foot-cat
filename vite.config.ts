@@ -49,11 +49,11 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       minify: "terser",
       /** 在打包代码时移除 console.log、debugger 和 注释 */
       terserOptions: {
-        compress: {
-          drop_console: false,
-          drop_debugger: true,
-          pure_funcs: ["console.log"]
-        },
+        // compress: {
+        //   drop_console: false,
+        //   drop_debugger: true,
+        //   pure_funcs: ["console.log"]
+        // },
         format: {
           /** 删除注释 */
           comments: false

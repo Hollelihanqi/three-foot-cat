@@ -17,7 +17,6 @@
 <script lang="ts" setup>
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
-import BaseButton from "@/components/BaseButton.vue"
 import { useWappActivityOrderStore } from "@/store/modules/useWappActivityOrder"
 const store = useWappActivityOrderStore()
 

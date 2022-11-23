@@ -17,7 +17,6 @@
 <script lang="ts" setup>
 import { ref, onActivated } from "vue"
 import BaseTable from "@/components/BaseTable.vue"
-import BaseButton from "@/components/BaseButton.vue"
 import { useWappStore } from "@/store/modules/useWapp"
 const store = useWappStore()
 

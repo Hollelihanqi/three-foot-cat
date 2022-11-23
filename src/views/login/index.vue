@@ -3,6 +3,7 @@ import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useUserStore } from "@/store/modules/user"
 import { User, Lock, Key } from "@element-plus/icons-vue"
+import { setToken } from "@/utils/cache/cookies"
 import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
 import type { FormInstance, FormRules } from "element-plus"
 
@@ -43,22 +44,25 @@ const loginFormRules: FormRules = {
 const handleLogin = () => {
   loginFormRef.value?.validate((valid: boolean) => {
     if (valid) {
-      loading.value = true
-      useUserStore()
-        .login({
-          username: loginForm.username,
-          password: loginForm.password
-        })
-        .then(() => {
-          router.push({ path: "/" })
-        })
-        .catch(() => {
-          createCode()
-          loginForm.password = ""
-        })
-        .finally(() => {
-          loading.value = false
-        })
+      // loading.value = true
+      setToken("testToken")
+      router.push({ path: "/" })
+
+      // useUserStore()
+      //   .login({
+      //     username: loginForm.username,
+      //     password: loginForm.password
+      //   })
+      //   .then(() => {
+      //     router.push({ path: "/" })
+      //   })
+      //   .catch(() => {
+      //     createCode()
+      //     loginForm.password = ""
+      //   })
+      //   .finally(() => {
+      //     loading.value = false
+      //   })
     } else {
       return false
     }

@@ -9,7 +9,7 @@ import type { RouteRecordRaw } from "vue-router"
 
 export const useUserStore = defineStore("user", () => {
   const token = ref<string>(getToken() || "")
-  const roles = ref<string[]>([])
+  const roles = ref<string[]>(["admin"])
 
   /** 设置角色数组 */
   const setRoles = (value: string[]) => {

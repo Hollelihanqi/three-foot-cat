@@ -14,6 +14,8 @@ router.beforeEach(async (to, _from, next) => {
   NProgress.start()
   const userStore = useUserStoreHook()
   const permissionStore = usePermissionStoreHook()
+  console.log(to)
+  console.log(getToken())
   // 判断该用户是否登录
   if (getToken()) {
     if (to.path === "/login") {
